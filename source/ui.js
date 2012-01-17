@@ -31,7 +31,11 @@ if (typeof jQuery !== 'undefined') {
             var UI = function(nes) {
                 var self = this;
                 self.nes = nes;
-        
+                this.prevBuffer = new Array(256*240);
+                for (var i=0; i<256*240; i++) {
+                    prevBuffer[i] = 0;
+                }
+
                 self.root = $('<div></div>');
                 self.screen = $('<canvas class="nes-screen" width="256" height="240"></canvas>').appendTo(self.root);
                 
@@ -222,7 +226,7 @@ if (typeof jQuery !== 'undefined') {
                     return this.dynamicaudio.writeInt(samples);
                 },
             
-                writeFrame: function(buffer, prevBuffer) {
+                writeFrame: function(buffer) {
                     var imageData = this.canvasImageData.data;
                     var pixel, i, j;
 
